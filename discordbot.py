@@ -5,7 +5,7 @@ import asyncio
 
 # Third Party Libraries
 import discord
-token = "Njk3ODcxNzExMjEwNTY5OTA5.Xo92UA.LQc4_EIVpF_ZUpgSjsMFLYvSA2s"
+token = "token"
 client = discord.Client()
 players = ["613156357239078913"]
 sum = 0
