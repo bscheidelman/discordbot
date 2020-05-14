@@ -7,14 +7,14 @@ import asyncio
 import discord
 token = "token"
 client = discord.Client()
-players = ["613156357239078913"]
+players = []
 sum = 0
-
+time = 20
 
 @client.event
 async def on_ready():
     print('We have logged in as {0.user}'.format(client))
-    await client.change_presence(activity=discord.Game(name='losing money to Erika'))
+    await client.change_presence(activity=discord.Game(name='Jamming with 27o'))
 
 
 @client.event
@@ -23,7 +23,14 @@ async def on_message(message):
         return
 
     if message.content.startswith('!tm'):
-        if message.channel.id == 698990499104555079:
+        if message.channel.id == 709149749025964043:
+            await message.channel.send("Initiating...")
+            players.clear()
+            for guild in client.guilds:
+                for member in guild.members:
+                    x = member.id
+                    x = str(x)
+                    players.append(x)
             global sum
             t = len(players)
             L = 0 
@@ -32,14 +39,21 @@ async def on_message(message):
                 L += 1
                 tempVar = "!pw <@" + id + ">"
                 await message.channel.send(tempVar)
-            await asyncio.sleep(300)
-            await message.channel.send("The total balance of all players is " + str(sum) + " chips!")
+            time = len(players)
+            time = int(time)
+            time = time*4
+            await asyncio.sleep(time)
+            id = message.author.id
+            id = str(id)
+            tempVar = "!<@" + id + ">"
+            await message.channel.send("The total balance of all players is " + str(sum) + " chips!" + tempVar)
             sum = 0
+
 
 
 @client.event
 async def on_message_edit(before, after):
-    if before.channel.id == 698990499104555079:            
+    if before.channel.id == 709149749025964043:            
         if len(after.embeds) != 0:
             if len(before.embeds) != 0: 
                 expression = re.compile(r"wallet:[\s\*]*(?P<amount>\d+)[\s\*]chip")
@@ -49,24 +63,6 @@ async def on_message_edit(before, after):
                     chips = int(chips)
                     global sum
                     sum = sum + chips
-    
-@client.event
-async def on_raw_reaction_add(payload):
-    #channel_id = payload.channel_id
-    x = payload.message_id
-    x = str(x)
-    if x == 'REPLACE WITH MESSAGE ID':
-        member = payload.member
-        role = discord.utils.get(member.guild.roles, name = 'has ID')
-
-        await member.add_roles(role)
-        x = member.id
-        x = str(x)
-        players.append(x)
-
-        print(x)
-
-
 
 
 client.run(token)
